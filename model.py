@@ -21,7 +21,7 @@ class PhoneBook:
         with open(self._filename, 'a', encoding='utf-8') as file:
             file.write(f"{name} {phone_number}\n")
 
-    def delete_contact(self, name): # Удалить кокнтакт
+    def delete_contact(self, name):                                 # Удалить контакт
         with open(self._filename, 'r', encoding='utf-8') as file:
             lines = file.readlines()
         with open(self._filename, 'w', encoding='utf-8') as file:
