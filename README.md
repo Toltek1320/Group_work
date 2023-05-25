@@ -1,2 +1,2 @@
 # Group_work
-Иван, Руслан (Toltek1320), Ольга
+Иван (Sofil1886), Руслан (Toltek1320), Ольга (OMyakinina)
