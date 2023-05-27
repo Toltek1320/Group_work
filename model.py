@@ -5,6 +5,70 @@
 # - change_contact
 # - get_contacts
 
+
+import os # Модуль os - библиотека функций для работы с операционной системой
+
+class Contact:
+    def __init__(self, surname, phone_number):
+        self.surname = surname
+        self.phone_number = phone_number
+
+class Phonebook:
+    def __init__(self):
+        self.contacts = []
+        self.load_contacts()
+
+    def load_contacts(self):
+        if not os.path.exists("data.txt"):
+            return
+
+        with open("data.txt", "r") as file:
+            for line in file:
+                surname, phone_number = line.strip().split(",")
+                self.add_contact(surname, phone_number)
+
+    def search_contact(self, surname):
+        for contact in self.contacts:
+            if contact.surname == surname:
+                return contact
+
+        return "Контакт не найден"
+
+    def add_contact(self, surname, phone_number):
+        contact = Contact(surname, phone_number)
+        self.contacts.append(contact)
+        self.save_contacts()
+
+    def delete_contact(self, surname):
+        for contact in self.contacts:
+            if contact.surname == surname:
+                self.contacts.remove(contact)
+                self.save_contacts()
+                return
+
+    def update_contact(self, surname, field, value):
+        for contact in self.contacts:
+            if contact.surname == surname:
+                setattr(contact, field, value)
+                self.save_contacts()
+                return
+
+    
+    def get_contacts(self):
+        return self.contacts
+
+    def save_contacts(self):
+        with open("data.txt", "w") as file:
+            for contact in self.contacts:
+                file.write(f"{contact.surname},{contact.phone_number}\n")
+
+# нужно написать функции:
+# - search_contact
+# - add_contact
+# - delete_contact
+# - change_contact
+# - get_contacts
+
 # class PhoneBook:
 #     def __init__(self, filename):
 #         self._filename = filename
@@ -159,59 +223,3 @@
 # def get_contacts(contacts):
 #     return contacts.copy()
 
-import os # Модуль os - библиотека функций для работы с операционной системой
-
-
-class Contact:
-    def __init__(self, surname, phone_number):
-        self.surname = surname
-        self.phone_number = phone_number
-
-
-class Phonebook:
-    def __init__(self):
-        self.contacts = []
-        self.load_contacts()
-
-    def load_contacts(self):
-        if not os.path.exists("data.txt"):
-            return
-
-        with open("data.txt", "r") as file:
-            for line in file:
-                surname, phone_number = line.strip().split(",")
-                self.add_contact(surname, phone_number)
-
-    def search_contact(self, surname):
-        for contact in self.contacts:
-            if contact.surname == surname:
-                return contact
-
-        return "Контакт не найден"
-
-    def add_contact(self, surname, phone_number):
-        contact = Contact(surname, phone_number)
-        self.contacts.append(contact)
-        self.save_contacts()
-
-    def delete_contact(self, surname):
-        for contact in self.contacts:
-            if contact.surname == surname:
-                self.contacts.remove(contact)
-                self.save_contacts()
-                return
-
-    def update_contact(self, surname, field, value):
-        for contact in self.contacts:
-            if contact.surname == surname:
-                setattr(contact, field, value)
-                self.save_contacts()
-                return
-
-    def get_contacts(self):
-        return self.contacts
-
-    def save_contacts(self):
-        with open("data.txt", "w") as file:
-            for contact in self.contacts:
-                file.write(f"{contact.surname},{contact.phone_number}\n")
